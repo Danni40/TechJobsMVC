@@ -48,6 +48,11 @@ namespace TechJobs.Models
          */
         public static List<Dictionary<string, string>> FindByValue(string value)
         {
+            if(value == null)
+            {
+                value = "";
+            }
+        
             // load data, if not already loaded
             LoadData();
 
@@ -87,18 +92,21 @@ namespace TechJobs.Models
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
-            foreach (Dictionary<string, string> row in AllJobs)
+            if (value != null)
             {
-                string aValue = row[column];
-
-                if (aValue.ToLower().Contains(value.ToLower()))
+                foreach (Dictionary<string, string> row in AllJobs)
                 {
-                    jobs.Add(row);
+                    string aValue = row[column];
+
+                    if (aValue.ToLower().Contains(value.ToLower()))
+                    {
+                        jobs.Add(row);
+                    }
                 }
             }
 
-            return jobs;
-        }
+        return jobs;
+    }
 
         /*
          * Load and parse data from job_data.csv
